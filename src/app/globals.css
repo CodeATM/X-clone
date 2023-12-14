@@ -2,26 +2,117 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+html {
+  font-size: 16px;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  min-height: 100vh;
+  background-color: #000000;
+  color: #f8f8f8;
+  /* font-family: var(--font-roboto); */
+}
+
+.btn {
+  background-color: #1976d2;
+  color: #f5f8fa;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: bold;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+btn:hover {
+  background-color: #1d5fa1;
+  color: #f5f8fa;
+}
+
+.btn-light {
+  color: #1da1f2;
+  background-color: #303030;
+  border: 1px solid #d1dce4;
+}
+
+.button-light:hover {
+  background-color: #1976d2;
+  color: #f5f8fa;
+}
+
+main {
+  position: relative;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(360px, 600px) 1fr;
+  height: 100vh;
+  position: relative;
+}
+
+@media screen and (max-width: 1300px) {
+  .layout {
+    grid-template-columns: auto minmax(360px, 600px) 1fr;
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  .layout {
+    grid-template-columns: auto minmax(360px, 1fr) 330px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .layout {
+    display: flex;
+    width: 100%;
+  }
+}
+
+.btn-white {
+    color: #f8f8f8;
+    background-color: #000000;
+    border: 1px solid #252525;
+}
+
+.btn-white:hover {
+  background-color: #0c0c0c;
+  color:#f8f8f8;
+}
+
+.btn-dark {
+    color: #16181c;
+    background-color: #f8f8f8;
+
+
+}
+
+.btn-dark:hover {
+  background-color: #cecece;
+  color: #16181c;
+}
+
+
+@media screen and (max-width: 850px) {
+  .layout {
+    grid-template-columns: auto minmax(360px, 1fr) 0;
+  }
+}
+
+.mini-profile {
+  position: fixed;
+  bottom: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  background-color: #16181c;
+  max-width: 180px;
+  overflow: hidden;
+  font-size: initial;
 }

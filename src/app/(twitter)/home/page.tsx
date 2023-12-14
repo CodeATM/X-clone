@@ -3,7 +3,7 @@
 import { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import Tweets from "@/components/tweet/Tweets";
+import Tweets from '@/Components/tweet/Tweets'
 import { getRelatedTweets } from "@/utilities/fetch";
 import CircularLoading from '@/Components/mics/CircularLoading'
 import NothingToShow from "@/Components/mics/NothingToShow";

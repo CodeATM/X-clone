@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import {cookies} from 'next/headers'
 import { UserTypes } from "@/types/userTypes";
-import Tweet from "@/models/tweet.model";
+import Tweet from '@/models/tweet.schema'
 import { verifyJwtToken } from "@/utilities/auth";
 import { connectToDB } from "@/utilities/mongoose";
 

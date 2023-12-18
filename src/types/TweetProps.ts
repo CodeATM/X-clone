@@ -1,7 +1,7 @@
 import { UserTypes } from "./userTypes";
 
 export type TweetProps = {
-    id: string;
+    _id: string;
     text: string;
     createdAt: Date;
     author: UserTypes;

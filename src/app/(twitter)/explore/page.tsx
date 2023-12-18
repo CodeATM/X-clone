@@ -10,7 +10,7 @@ import { AuthContext } from "../layout";
 import { getAllTweets } from "@/utilities/fetch";
 import CircularLoading from '@/Components/mics/CircularLoading'
 
-const page = () => {
+const Page = () => {
   const { token, isPending } = useContext(AuthContext);
 
   const { data, fetchNextPage, isLoading, hasNextPage } = useInfiniteQuery(
@@ -58,4 +58,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

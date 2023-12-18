@@ -1,11 +1,46 @@
-import React from 'react'
+"use client";
 
-type Props = {}
+import { useContext } from "react";
+import { useQuery } from "@tanstack/react-query";
 
-const page = (props: Props) => {
-  return (
-    <div>page</div>
-  )
+import { getUserTweet } from "@/utilities/fetch";
+import SingleTweet from "@/Components/tweet/SingleTweet";
+import CircularLoading from "@/Components/mics/CircularLoading";
+import { AuthContext } from "@/app/(twitter)/layout";
+import NotFound from "@/app/not-found";
+import BackToArrow from "@/Components/mics/BackToArrow";
+
+export default function SingleTweetPage({
+    params: { username, tweetId },
+}: {
+    params: { username: string; tweetId: string };
+}) {
+    const queryKey = ["tweets", username, tweetId];
+
+    const { token, isPending } = useContext(AuthContext);
+    const { isLoading, data, isFetched } = useQuery({
+        queryKey: queryKey,
+        queryFn: () => getUserTweet(tweetId, username),
+    });
+
+    if (!isLoading && !data.tweet) return NotFound();
+
+    let backToProps = {
+        title: username,
+        url: `/${username}`,
+    };
+
+    if (isFetched && data.tweet.isReply) {
+        backToProps = {
+            title: "Tweet",
+            url: `/${data.tweet.repliedTo.author.username}/tweets/${data.tweet.repliedTo.id}`,
+        };
+    }
+
+    return (
+        <div className='w-full'>
+            {isFetched && <BackToArrow title={backToProps.title} url={backToProps.url} />}
+            {isLoading || isPending ? <CircularLoading /> : <SingleTweet tweet={data.tweet} token={token} />}
+        </div>
+    );
 }
-
-export default page

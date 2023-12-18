@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import Tweet from "@/models/tweet.model";
-import Users from "@/models/users.schema";
+import Tweet from '@/models/tweet.schema'
+import User from '@/models/users.schema'
 import { connectToDB } from "@/utilities/mongoose";
 
 export async function GET(request: NextRequest, { params: { username } }: { params: { username: string } }) {
   await connectToDB()
   try {
-    const user = await Users.findOne({ username });
+    const user = await User.findOne({ username });
 
     if (!user) {
       return NextResponse.json({ success: false, message: "User not found." });

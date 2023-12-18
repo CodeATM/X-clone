@@ -47,7 +47,7 @@ export default function NotificationsPage() {
     if (isPending || !token || isLoading) return <CircularLoading />;
 
     return (
-        <main>
+        <main className="relative">
             <h1 className="py-8 px-4 text-[1.25rem] font-bold border-borderColor border-b-[1px] sticky z-50 top-0 bg-backgroundPrimary opacity-50">Notifications</h1>
             {isFetched && data.notifications.length === 0 ? (
                 <NothingToShow />

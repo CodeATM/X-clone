@@ -3,15 +3,16 @@ import { connectToDB } from "@/utilities/mongoose";
 import Notification from "@/models/notification.model";
 import {cookies} from 'next/headers'
 import { UserTypes } from "@/types/userTypes";
-import Tweet from "@/models/tweet.model";
+import Tweet from '@/models/tweet.schema'
 import { verifyJwtToken } from "@/utilities/auth";
 
 export async function GET(request: NextRequest, { params: { tweetId } }: { params: { tweetId: string } }) {
   await connectToDB()
+  console.log('hello')
   try {
     const tweets = await Tweet.find({
       isReply: true,
-      repliedToId: tweetId,
+      repliedTo: tweetId,
     })
       .populate({
         path: "author",
@@ -48,10 +49,14 @@ export async function GET(request: NextRequest, { params: { tweetId } }: { param
   }
 }
 
+
+
+
 export async function POST(
   request: NextRequest,
   { params: { tweetId, username } }: { params: { tweetId: string; username: string } }
 ) {
+  console.log('i got here')
   const { authorId, text, photoUrl } = await request.json();
 
   const cookieStore = cookies();
@@ -84,24 +89,25 @@ export async function POST(
 
     await newTweet.save();
 
-    if (username !== verifiedToken.username) {
-      // Create a notification
-      const notification = new Notification({
-        sender: {
-          username: verifiedToken.username,
-          name: verifiedToken.name,
-          photoUrl: verifiedToken.photoUrl,
-        },
-        content: {
-          id: tweetId,
-        },
-      });
+    // if (username !== verifiedToken.username) {
+    //   // Create a notification
+    //   const notification = new Notification({
+    //     sender: {
+    //       username: verifiedToken.username,
+    //       name: verifiedToken.name,
+    //       photoUrl: verifiedToken.photoUrl,
+    //     },
+    //     content: {
+    //       id: tweetId,
+    //     },
+    //   });
 
-      await notification.save();
-    }
+    //   await notification.save();
+    // }
 
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
+    console.log(error)
     return NextResponse.json({ success: false, error });
   }
 }

@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDB } from "@/utilities/mongoose";
 
-import Tweet from "@/models/tweet.model";
-
+import Tweet from '@/models/tweet.schema'
 export async function GET(request: NextRequest) {
   await connectToDB()
   let page = request.nextUrl.searchParams.get("page");

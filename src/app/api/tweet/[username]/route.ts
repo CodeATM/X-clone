@@ -1,14 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDB } from "@/utilities/mongoose";
-import Tweet from "@/models/tweet.model";
+import Tweet from '@/models/tweet.schema'
+import User from '@/models/users.schema'
 
-export default async function GET(request: NextRequest, { params: { username } }: { params: { username: string } }) {
+export async function GET(request: NextRequest, { params: { username } }: { params: { username: string } }) {
   await connectToDB();
-  console.log('route')
+
 
   try {
+
+    const user = await User.findOne({ username: username })
+    let identifier = user.id
     const tweets = await Tweet.find({
-      'author.username': username,
+      'author': identifier,
       isReply: false,
     })
       .sort({ createdAt: "desc" })

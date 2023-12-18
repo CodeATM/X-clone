@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from 'next/headers';
 import {SignJWT} from 'jose'
-import Users from "@/models/users.schema";
+import User from '@/models/users.schema'
 import { connectToDB } from "@/utilities/mongoose";
 import { getJwtSecretKey, verifyJwtToken } from "@/utilities/auth";
 import { UserTypes } from "@/types/userTypes";
@@ -27,7 +27,7 @@ console.log("route here")
     }
 
     try {
-        const user = await Users.findOneAndUpdate(
+        const user = await User.findOneAndUpdate(
             { username: username },
             data,
             { new: true, runValidators: true }

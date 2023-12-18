@@ -80,7 +80,7 @@ export default function Retweet({ tweetId, tweetAuthor }: TweetOptionsProps) {
   return (
     <>
       <motion.button
-        className={`icon retweet ${isRetweeted ? "active" : ""}`}
+        className={`icon flex items-center gap-1 ${isRetweeted ? "active" : ""}`}
         onClick={handleRetweet}
         whileTap={{ scale: 0.9 }}
         animate={{ scale: isRetweeted ? [1, 1.5, 1.2, 1] : 1 }}

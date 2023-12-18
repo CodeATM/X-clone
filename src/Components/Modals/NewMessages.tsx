@@ -76,11 +76,11 @@ export default function NewMessages({ open, handleNewMessageClose, token, recipi
 
     return (
         <Dialog className="dialog" open={open} onClose={handleNewMessageClose} fullWidth maxWidth="xs">
-            <DialogTitle className="title">New Message {recipient ? "to " + recipient.toLowerCase() : ""}</DialogTitle>
-            <form className="dialog-form new-message-form" onSubmit={formik.handleSubmit}>
+            <DialogTitle className="font-bold text-twitterBlack text-center p-4 text-[1.75rem]">New Message {recipient ? "to " + recipient.toLowerCase() : ""}</DialogTitle>
+            <form className="w-full flex flex-col new-message-form" onSubmit={formik.handleSubmit}>
                 <DialogContent>
                     <div className="input-group">
-                        <div className="input">
+                        <div className="p-2 max-w-[20vw]">
                             <TextField
                                 fullWidth
                                 hiddenLabel
@@ -112,7 +112,7 @@ export default function NewMessages({ open, handleNewMessageClose, token, recipi
                                 autoFocus={recipient ? true : false}
                             />
                         </div>
-                        <div className="input-additions">
+                        <div className="border-t-none justify-end mr-40">
                             <button
                                 onClick={(e) => {
                                     e.preventDefault();
@@ -134,7 +134,7 @@ export default function NewMessages({ open, handleNewMessageClose, token, recipi
                         </div>
                     </div>
                     {showPicker && (
-                        <div className="emoji-picker">
+                        <div className="flex justify-center">
                             <Picker
                                 data={data}
                                 onEmojiSelect={(emoji: any) => {
@@ -151,7 +151,7 @@ export default function NewMessages({ open, handleNewMessageClose, token, recipi
                     <CircularLoading />
                 ) : (
                     <button
-                        className={`btn btn-dark ${formik.isValid ? "" : "disabled"}`}
+                        className={`btn text-constWhite bg-twitterBlack hover:bg-twitterLightBlack hover:text-twitterWhite ${formik.isValid ? "" : "opacity-50 cursor-not-allowed filter"}`}
                         type="submit"
                         disabled={!formik.isValid}
                     >

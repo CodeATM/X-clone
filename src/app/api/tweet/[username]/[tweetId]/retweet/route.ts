@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectToDB } from "@/utilities/mongoose";
 import {cookies} from 'next/headers'
 import { UserTypes } from "@/types/userTypes";
-import Tweet from "@/models/tweet.model";
+import Tweet from '@/models/tweet.schema'
 import { verifyJwtToken } from "@/utilities/auth";
 import Notification from "@/models/notification.model";
 
@@ -45,14 +45,14 @@ export async function POST(
     );
 
     // Create a new tweet representing the retweet
-    const newRetweet = new Tweet({
+    const newRetweet = await Tweet.create({
       isRetweet: true,
       text: "",
       author: tokenOwnerId,
       retweetOf: tweetId,
     });
 
-    await newRetweet.save();
+    // await newRetweet.save();
 
     if (username !== verifiedToken.username) {
       // Create a notification

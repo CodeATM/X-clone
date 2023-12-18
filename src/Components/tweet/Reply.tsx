@@ -7,7 +7,7 @@ export default function Reply({ tweet }: { tweet: TweetProps }) {
     const router = useRouter();
 
     const handleClick = () => {
-        router.push(`/${tweet.author.username}/tweets/${tweet.id}`);
+        router.push(`/${tweet.author.username}/tweets/${tweet._id}`);
     };
 
     return (

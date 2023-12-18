@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import {SignJWT} from 'jose'
 import { connectToDB } from "@/utilities/mongoose";
-import Users from '@/models/users.schema'
+import User from '@/models/users.schema'
 import { comparePassword } from "@/utilities/bcrypt";
 import { getJwtSecretKey } from "@/utilities/auth";
 
@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     const {username, password} = await request.json()
 
     try {
-        const user = await Users.findOne({username})
+        const user = await User.findOne({username})
 
         if (!user) {
             return NextResponse.json({

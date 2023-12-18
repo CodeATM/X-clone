@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SignJWT } from "jose";
-import Users from "@/models/users.schema";
+import User from '@/models/users.schema'
 import { hashPassword } from "@/utilities/bcrypt";
 import { getJwtSecretKey } from "@/utilities/auth";
 import { connectToDB } from "@/utilities/mongoose";
@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
 
   try {
     // Check if the username already exists
-    const userExist = await Users.findOne({ username: userInfo.username });
+    const userExist = await User.findOne({ username: userInfo.username });
 
     if (userExist) {
       return NextResponse.json({
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create a new user using Mongoose
-    const newUser = await Users.create({
+    const newUser = await User.create({
       ...userInfo,
       password: hashedPassword,
     });

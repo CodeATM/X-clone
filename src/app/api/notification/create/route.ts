@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import Users from "@/models/users.schema";
+import User from '@/models/users.schema'
 import Notification from "@/models/notification.model";
 import { connectToDB } from "@/utilities/mongoose";
 
@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
   try {
     // Assuming you have a User model to connect to
-    const user = await Users.findOne({ username: recipient });
+    const user = await User.findOne({ username: recipient });
 
     if (!user) {
       return NextResponse.json({ success: false, error: "User not found." });

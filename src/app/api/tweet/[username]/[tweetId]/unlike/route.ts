@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectToDB } from "@/utilities/mongoose";
 import {cookies} from 'next/headers'
 import { UserTypes } from "@/types/userTypes";
-import Tweet from "@/models/tweet.model";
+import Tweet from '@/models/tweet.schema'
 import { verifyJwtToken } from "@/utilities/auth";
 
 export async function POST(request: NextRequest, { params: { tweetId } }: { params: { tweetId: string } }) {

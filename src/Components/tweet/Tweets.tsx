@@ -6,7 +6,7 @@ export default function Tweets({ tweets }: TweetsArray) {
         <>
             {tweets &&
                 tweets.map((tweet: TweetProps) => {
-                    return <Tweet key={tweet.id} tweet={tweet} />;
+                    return <Tweet key={tweet._id} tweet={tweet} />;
                 })}
         </>
     );

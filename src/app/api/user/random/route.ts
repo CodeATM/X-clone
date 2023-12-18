@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import Users from "@/models/users.schema";
+import User from '@/models/users.schema'
 import { verifyJwtToken } from "@/utilities/auth";
 import { UserTypes } from "@/types/userTypes";
 import {cookies} from 'next/headers'
@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
 
   const username = verifiedToken.username as string;
 
-  const usersCount = await Users.countDocuments({
+  const usersCount = await User.countDocuments({
     isPremium: true,
     $nor: [
       { username: username },
@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
   if (skip < 0) skip = 0;
 
   try {
-    const users = await Users.find({
+    const users = await User.find({
       $nor: [
         { photoUrl: null },
         { username: username },

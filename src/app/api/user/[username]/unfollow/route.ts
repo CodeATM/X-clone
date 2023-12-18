@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import Users from "@/models/users.schema";
+import User from '@/models/users.schema'
 import { verifyJwtToken } from "@/utilities/auth";
 import { UserTypes } from "@/types/userTypes";
 import { connectToDB } from "@/utilities/mongoose";
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest, { params: { username } }: { par
     return NextResponse.json({ success: false, message: "You are not authorized to perform this action." });
 
   try {
-    const updatedUser = await Users.findOneAndUpdate(
+    const updatedUser = await User.findOneAndUpdate(
       { username: username },
       {
         $pull: { followers: tokenOwnerId },

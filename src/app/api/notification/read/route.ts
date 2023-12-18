@@ -4,7 +4,7 @@ import { connectToDB } from "@/utilities/mongoose";
 
 import Notification from "@/models/notification.model";
 import { verifyJwtToken } from "@/utilities/auth";
-import Users from "@/models/users.schema";
+import User from '@/models/users.schema'
 
 export async function GET(request: NextRequest) {
   await connectToDB()
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
 
   try {
     // Assuming you have a User model to connect to
-    const user = await Users.findById(verifiedToken.id);
+    const user = await User.findById(verifiedToken.id);
 
     if (!user) {
       return NextResponse.json({ success: false, message: "User not found." });

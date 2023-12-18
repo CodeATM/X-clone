@@ -27,14 +27,20 @@ export default function Tweet({ tweet }: { tweet: TweetProps }) {
     const { token } = useContext(AuthContext);
     const router = useRouter();
 
+    // console.log(tweet.id)
+
     let displayedTweet = tweet;
 
     if (tweet.isRetweet) {
         displayedTweet = tweet.retweetOf;
     }
 
+    // console.log(tweet._id)
+
+    console.log(displayedTweet)
+
     const handleTweetClick = () => {
-        router.push(`/${displayedTweet.author.username}/tweets/${displayedTweet.id}`);
+        router.push(`/${displayedTweet.author.username}/tweets/${displayedTweet._id}`);
     };
     const handlePropagation = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -76,8 +82,7 @@ export default function Tweet({ tweet }: { tweet: TweetProps }) {
             <Link
                 onClick={handlePropagation}
                 className="mb-auto"
-                // href={`/${displayedTweet.author.username}`}
-                href = '/'
+                href={displayedTweet.author ? `/${displayedTweet.author.username}` : ''}
                 onMouseEnter={handlePopoverOpen}
                 onMouseLeave={handlePopoverClose}
             >
@@ -155,10 +160,10 @@ export default function Tweet({ tweet }: { tweet: TweetProps }) {
                 )}
                 <div onClick={handlePropagation} className="max-w-[400px] flex justify-between mt-2 translate-[-6px, -6px]">
                     <Reply tweet={displayedTweet} />
-                    <Retweet tweetId={displayedTweet.id} tweetAuthor={displayedTweet.author.username} />
-                    <Like tweetId={displayedTweet.id} tweetAuthor={displayedTweet.author.username} />
+                    <Retweet tweetId={displayedTweet._id} tweetAuthor={displayedTweet.author.username} />
+                    <Like tweetId={displayedTweet._id} tweetAuthor={displayedTweet.author.username} />
                     <Share
-                        tweetUrl={`https://${window.location.hostname}/${displayedTweet.author.username}/tweets/${displayedTweet.id}`}
+                        tweetUrl={`https://${window.location.hostname}/${displayedTweet.author.username}/tweets/${displayedTweet._id}`}
                     />
                 </div>
             </div>

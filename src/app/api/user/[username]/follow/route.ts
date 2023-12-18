@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import Users from "@/models/users.schema";
+import User from '@/models/users.schema'
 import { verifyJwtToken } from "@/utilities/auth";
 // import { createNotification } from "@/utilities/fetch";
 import { UserTypes } from "@/types/userTypes";
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest, { params: { username } }: { par
     return NextResponse.json({ success: false, message: "You are not authorized to perform this action." });
 
   try {
-    const updatedUser = await Users.findOneAndUpdate(
+    const updatedUser = await User.findOneAndUpdate(
       { username: username },
       {
         $addToSet: { followers: tokenOwnerId },

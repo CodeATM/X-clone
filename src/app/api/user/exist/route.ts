@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from 'next/server'
 
-import Users from "@/models/users.schema";
+import User from '@/models/users.schema'
 import { connectToDB } from "@/utilities/mongoose";
 
 export async function GET(request: NextRequest) {
@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     if (!query) return NextResponse.json({success: false, message: 'Missing query'});
 
     try {
-        const user = await Users.findOne({ username: query});
+        const user = await User.findOne({ username: query});
 
         if(!user) return NextResponse.json({sucess:false, message: 'user not found'})
         return NextResponse.json({success: true})

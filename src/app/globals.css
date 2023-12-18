@@ -13,6 +13,22 @@ body {
   /* font-family: var(--font-roboto); */
 }
 
+.overflow{
+  overflow-wrap: anywhere;
+}
+
+.grid-col{
+  grid-template-columns: auto minmax(300px, 1fr) minmax(90px, auto) 
+}
+
+.confirm {
+  width: clamp(150px, 33vw, 250px);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .btn {
   background-color: #1976d2;
   color: #f5f8fa;
@@ -72,28 +88,25 @@ main {
 }
 
 .btn-white {
-    color: #f8f8f8;
-    background-color: #000000;
-    border: 1px solid #252525;
+  color: #f8f8f8;
+  background-color: #000000;
+  border: 1px solid #252525;
 }
 
 .btn-white:hover {
   background-color: #0c0c0c;
-  color:#f8f8f8;
+  color: #f8f8f8;
 }
 
 .btn-dark {
-    color: #16181c;
-    background-color: #f8f8f8;
-
-
+  color: #16181c;
+  background-color: #f8f8f8;
 }
 
 .btn-dark:hover {
   background-color: #cecece;
   color: #16181c;
 }
-
 
 @media screen and (max-width: 850px) {
   .layout {

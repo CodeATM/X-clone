@@ -3,7 +3,7 @@ import {cookies} from 'next/headers'
 import { UserTypes } from "@/types/userTypes";
 import Message from "@/models/messages.model";
 import { verifyJwtToken } from "@/utilities/auth";
-import Users from "@/models/users.schema";
+import User from '@/models/users.schema'
 
 export async function POST(request: NextRequest) {
   const { recipient, sender, text, photoUrl } = await request.json();
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
 
   try {
     // Assuming you have a User model to connect to
-    const isRecipient = await Users.findOne({
+    const isRecipient = await User.findOne({
       username: recipient,
     });
 

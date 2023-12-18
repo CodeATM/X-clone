@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import {cookies} from 'next/headers'
 import Notification from "@/models/notification.model";
 import { verifyJwtToken } from "@/utilities/auth";
-import Users from "@/models/users.schema";
+import User from '@/models/users.schema'
 import { connectToDB } from "@/utilities/mongoose";
 export async function GET(request: NextRequest) {
   await connectToDB()
@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const user = await Users.findById(verifiedToken.id);
+    const user = await User.findById(verifiedToken.id);
 
     if (!user) {
       return NextResponse.json({ success: false, message: "User not found." });

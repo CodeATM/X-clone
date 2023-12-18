@@ -2,11 +2,11 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-// import Tweets from "@/components/tweet/Tweets";
+import Tweets from '@/Components/tweet/Tweets'
 import { getUserTweets } from "@/utilities/fetch";
-// import CircularLoading from "@/components/misc/CircularLoading";
+import CircularLoading from "@/Components/mics/CircularLoading";
 import NotFound from "@/app/not-found";
-// import NothingToShow from "@/components/misc/NothingToShow";
+import NothingToShow from "@/Components/mics/NothingToShow";
 
 export default function UserTweets({ params: { username } }: { params: { username: string } }) {
     const { isLoading, data } = useQuery({
@@ -14,9 +14,9 @@ export default function UserTweets({ params: { username } }: { params: { usernam
         queryFn: () => getUserTweets(username),
     });
 
-    // if (!isLoading && !data.tweets) return <NotFound/> ;
+    if (!isLoading && !data.tweets) return NotFound();
 
-    // if (data && data.tweets.length === 0) return <h1>Nothing to show</h1> ;
+    if (data && data.tweets.length === 0) return NothingToShow();
 
-    return <>{isLoading ? <h1>loading</h1> : <h1>tweet</h1> }</>;
+    return <>{isLoading ? <CircularLoading /> : <Tweets tweets={data.tweets} />}</>;
 }

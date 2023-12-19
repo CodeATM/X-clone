@@ -1,4 +1,4 @@
-import type { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 
 const Tweet = mongoose.model("Tweet");

@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import mongoose from "mongoose";
-
-const Tweet = mongoose.model("Tweet");
-const User = mongoose.model("User");
+import Tweet from '@/models/tweet.schema'
 
 export async function GET(request: NextRequest) {
   const query = request.nextUrl.searchParams.get("q");

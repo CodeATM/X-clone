@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const Tweet = mongoose.model("Tweet");
 const User = mongoose.model("User");
 
-export default async function handler(request: NextRequest) {
+export default async function GET(request: NextRequest) {
   const query = request.nextUrl.searchParams.get("q");
 
   if (!query) return NextResponse.json({ success: false, message: "Missing query." });

@@ -42,7 +42,7 @@ export async function GET(request: NextRequest, { params: { username } }: { para
       })
       .sort({ createdAt: "asc" });
 
-    const conversations = {};
+      const conversations: any = {};
 
     messages.forEach((message) => {
       const sender = message.sender.username;
@@ -61,7 +61,7 @@ export async function GET(request: NextRequest, { params: { username } }: { para
 
     const formattedConversations = Object.values(conversations);
 
-    formattedConversations.sort((a, b) => {
+    formattedConversations.sort((a: any, b: any) => {
       const lastMessageA = a.messages[a.messages.length - 1];
       const lastMessageB = b.messages[b.messages.length - 1];
 

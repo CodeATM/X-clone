@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Dialog, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
 import { LogOutDialogProps } from "@/types/ModalProps";
-import CircularLoading from "../misc/CircularLoading";
+import CircularLoading from "../mics/CircularLoading";
 
 export default function LogOutDialog({ open, handleLogOutClose, logout, isLoggingOut }: LogOutDialogProps) {
     return (

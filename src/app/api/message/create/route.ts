@@ -46,18 +46,18 @@ export async function POST(request: NextRequest) {
       recipient: isRecipient._id,
     });
 
-    // if (recipient !== verifiedToken.username && (await shouldCreateNotification(verifiedToken.username, recipient))) {
-    //   const notificationContent = {
-    //     sender: {
-    //       username: verifiedToken.username,
-    //       name: verifiedToken.name,
-    //       photoUrl: verifiedToken.photoUrl,
-    //     },
-    //     content: null,
-    //   };
+    if (recipient !== verifiedToken.username && (await shouldCreateNotification(verifiedToken.username, recipient))) {
+      const notificationContent = {
+        sender: {
+          username: verifiedToken.username,
+          name: verifiedToken.name,
+          photoUrl: verifiedToken.photoUrl,
+        },
+        content: null,
+      };
 
-    //   await Notification.create(recipient, "message", secret, notificationContent);
-    // }
+      await Notification.create(recipient, "message", secret, notificationContent);
+    }
 
     return NextResponse.json({ success: true });
   } catch (error: unknown) {

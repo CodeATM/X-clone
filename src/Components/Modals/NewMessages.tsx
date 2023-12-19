@@ -75,7 +75,7 @@ export default function NewMessages({ open, handleNewMessageClose, token, recipi
     });
 
     return (
-        <Dialog className="dialog" open={open} onClose={handleNewMessageClose} fullWidth maxWidth="xs">
+        <Dialog className="dialog bg-backgroundPrimary p-4" open={open} onClose={handleNewMessageClose} fullWidth maxWidth="xs">
             <DialogTitle className="font-bold text-twitterBlack text-center p-4 text-[1.75rem]">New Message {recipient ? "to " + recipient.toLowerCase() : ""}</DialogTitle>
             <form className="w-full flex flex-col new-message-form" onSubmit={formik.handleSubmit}>
                 <DialogContent>

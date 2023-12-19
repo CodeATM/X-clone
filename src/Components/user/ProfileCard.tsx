@@ -23,7 +23,7 @@ export default function ProfileCard({ username, token }: { username: string; tok
     };
 
     return (
-        <div className="py-5 px-4 minw-[100px] max-w-[300px] flex flex-col gap-3 ">
+        <div className="py-5 px-4 min-w-[100px] max-w-[300px] flex flex-col gap-3 ">
             <div className="avatar-wrapper">
             <Avatar
                     sx={{ width: 75, height: 75 }}

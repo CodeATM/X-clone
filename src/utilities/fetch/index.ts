@@ -105,6 +105,7 @@ export const editUser = async (updatedUser: string, username: string) => {
 
 
 export const getAllTweets = async (page = "1") => {
+    console.log(HOST_URL)
     const response = await fetch(`http://localhost:3000/api/tweet/all?page=${page}`, {
         next: {
             revalidate: 0,
@@ -283,7 +284,7 @@ export const markNotificationsRead = async () => {
 
 
 
-export const createMessage = async (message: string) => {
+export const  createMessage = async (message: string) => {
     const response = await fetch(`http://localhost:3000/api/message/create`, {
         method: "POST",
         headers: {

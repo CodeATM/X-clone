@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import User from '@/models/users.schema'
 import { verifyJwtToken } from "@/utilities/auth";
-// import { createNotification } from "@/utilities/fetch";
+import { createNotification } from "@/utilities/fetch";
 import { UserTypes } from "@/types/userTypes";
 import { connectToDB } from "@/utilities/mongoose";
 
@@ -16,12 +16,12 @@ export async function POST(request: NextRequest, { params: { username } }: { par
 
   const secret = process.env.CREATION_SECRET_KEY;
 
-  // if (!secret) {
-  //   return NextResponse.json({
-  //     success: false,
-  //     message: "Secret key not found.",
-  //   });
-  // }
+  if (!secret) {
+    return NextResponse.json({
+      success: false,
+      message: "Secret key not found.",
+    });
+  }
 
   if (!verifiedToken)
     return NextResponse.json({ success: false, message: "You are not authorized to perform this action." });
@@ -45,16 +45,16 @@ export async function POST(request: NextRequest, { params: { username } }: { par
       });
     }
 
-    // const notificationContent = {
-    //   sender: {
-    //     username: verifiedToken.username,
-    //     name: verifiedToken.name,
-    //     photoUrl: verifiedToken.photoUrl,
-    //   },
-    //   content: null,
-    // };
+    const notificationContent = {
+      sender: {
+        username: verifiedToken.username,
+        name: verifiedToken.name,
+        photoUrl: verifiedToken.photoUrl,
+      },
+      content: null,
+    };
 
-    // await createNotification(username, "follow", secret, notificationContent);
+    await createNotification(username, "follow", secret, notificationContent);
 
     return NextResponse.json({ success: true });
   } catch (error: unknown) {

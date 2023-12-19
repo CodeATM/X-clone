@@ -1,4 +1,4 @@
-import { NotificationTypes } from "@/types/NotificationProps";
+import { NotificationTypes, NotificationContent } from "@/types/NotificationProps";
 
 const HOST_URL = process.env.NEXT_HOST_URL
 

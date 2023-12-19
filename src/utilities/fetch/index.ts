@@ -269,6 +269,23 @@ export const markNotificationsRead = async () => {
     if (!json.success) throw new Error(json.message ? json.message : "Something went wrong.");
     return json;
 };
+export const createNotification = async (
+    recipient: string,
+    type: NotificationTypes,
+    secret: string,
+    notificationContent: NotificationContent = null
+) => {
+    const response = await fetch(`http://localhost:3000/api/notification/create`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ recipient, type, secret, notificationContent }),
+    });
+    const json = await response.json();
+    if (!json.success) throw new Error(json.message ? json.message : "Something went wrong.");
+    return json;
+};
 
 
 

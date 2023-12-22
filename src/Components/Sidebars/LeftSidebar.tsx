@@ -1,151 +1,186 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { useState, useContext } from "react";
+import { useContext, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  FaHome,
-  FaBell,
-  FaEnvelope,
-  FaUser,
-  FaCog,
-  FaHashtag,
-  FaEllipsisH,
-} from "react-icons/fa";
-
-import { AiFillTwitterCircle } from "react-icons/ai";
+import { Avatar, Menu, MenuItem } from "@mui/material";
+import { FaHome, FaBell, FaEnvelope, FaUser, FaCog, FaHashtag, FaEllipsisH, FaTwitter } from "react-icons/fa";
+import { AiFillTwitterCircle } from "react-icons/ai";  
+import Image from 'next/image'
+import NewTweetDialog from "@/Components/Modals/NewTweetDialog"
+import LogOutDialog from "@/Components/Modals/LogoutDialog";
+import { logout } from "@/utilities/fetch";
 import { AuthContext } from "@/app/(twitter)/layout";
+import { getFullURL } from "@/utilities/getFullURL";
+import UnreadNotificationsBadge from '@/utilities/Misc/UnreadNotificationBadge'
 
-type Props = {};
+export default function LeftSidebar() {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [isNewTweetOpen, setIsNewTweetOpen] = useState(false);
+    const [isLogOutOpen, setIsLogOutOpen] = useState(false);
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-function LeftSidebar({}: Props) {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [isNewTweetOpen, setIsNewTweetOpen] = useState(false);
-  const [isLogOutOpen, setIsLogOutOpen] = useState(false);
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const { token } = useContext(AuthContext);
 
-  const { token } = useContext(AuthContext);
-  const router = useRouter();
-  const pathname = usePathname();
+    const router = useRouter();
+    const pathname = usePathname();
 
-  const handleLogOut = async () => {};
+    const handleLogout = async () => {
+        setIsLoggingOut(true);
+        await logout();
+        router.push("/");
+    };
 
-  return (
-    <>
-      <div className="fixed gap-8 flex flex-col min-w-[10px] xl:min-w-[190px] 2xl:min-w-[230px] relative lg:ml-auto pl-4 border-borderColor border-r-[1px] h-screen top-0 left-0">
-        <Link href="/explore" className="pt-4 w-fit">
-          <Image
-            src="/x-icon.png"
-            width={20}
-            height={20}
-            alt=""
-            className="P-2"
-          />
-        </Link>
+    const handleAnchorClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(e.currentTarget);
+    };
+    const handleAnchorClose = () => {
+        setAnchorEl(null);
+    };
+    const handleNewTweetClick = () => {
+        setIsNewTweetOpen(true);
+    };
+    const handleNewTweetClose = () => {
+        setIsNewTweetOpen(false);
+    };
+    const handleLogOutClick = () => {
+        handleAnchorClose();
+        setIsLogOutOpen(true);
+    };
+    const handleLogOutClose = () => {
+        setIsLogOutOpen(false);
+    };
 
-        <nav>
-          <ul className="gap-4">
-            {token && (
-              <li className="m-auto">
-                <Link href="/home">
-                  <div
-                    className={`text-[20px] p-0 mb-5 lg:p-3 lg:rounded-[3rem] lg:inline-flex lg:transition ease-in-out text-twitterLightBlack lg:hover:bg-hover items-center ${
-                      pathname.startsWith("/home") ? "font-[900]" : ""
-                    }`}
-                  >
-                    <FaHome className="lg:mr-4 lg:text-twitterMuted" />{" "}
-                    <span className="hidden lg:block">Home</span>
-                  </div>
-                </Link>
-              </li>
-            )}
-            <li className="m-auto">
-              <Link href="/home">
-                <div
-                  className={`text-[20px] p-0 mb-5 lg:p-3 lg:rounded-[3rem] lg:inline-flex lg:transition ease-in-out text-twitterLightBlack lg:hover:bg-hover items-center ${
-                    pathname.startsWith("/explore") ? "font-[900]" : ""
-                  }`}
-                >
-                  <FaHashtag className="mr-4" />{" "}
-                  <span className="hidden lg:block">Explore</span>
-                </div>
-              </Link>
-            </li>
-            {token && (
-              <>
-                <li className="m-auto">
-                  <Link href="/notification">
-                    <div
-                      className={`text-[20px] p-0 mb-5 lg:p-3 lg:rounded-[3rem] lg:inline-flex lg:transition ease-in-out text-twitterLightBlack lg:hover:bg-hover items-center ${
-                        pathname.startsWith("/notification") ? "active" : ""
-                      }`}
-                    >
-                      <FaBell className="mr-4" />{" "}
-                      <span className="hidden lg:block">Notification</span>
-                    </div>
-                  </Link>
-                </li>{" "}
-                <li className="m-auto">
-                  <Link href="/messages">
-                    <div
-                      className={`text-[20px] p-0 mb-5 lg:p-3 lg:rounded-[3rem] lg:inline-flex lg:transition ease-in-out text-twitterLightBlack lg:hover:bg-hover items-center ${
-                        pathname.startsWith("/messages") ? "font-[900]" : ""
-                      }`}
-                    >
-                      <FaEnvelope className="mr-4 text-twitterMuted" />{" "}
-                      <span className="hidden lg:block">Messages</span>
-                    </div>
-                  </Link>
-                </li>{" "}
-                <li className="m-auto">
-                  <Link href={`/${token.username}`}>
-                    <div
-                      className={`text-[20px] p-0 mb-5 lg:p-3 lg:rounded-[3rem] lg:inline-flex lg:transition ease-in-out text-twitterLightBlack lg:hover:bg-hover items-center ${
-                        pathname.startsWith(`/${token.username}`)
-                          ? "font-[900]"
-                          : ""
-                      }`}
-                    >
-                      <FaUser className="mr-4" />{" "}
-                      <span className="hidden lg:block">Profile</span>
-                    </div>
-                  </Link>
-                </li>
-              </>
-            )}
-          </ul>
-        </nav>
-
-        {/* {token && (
-            <>
-              <button className="btn btn-tweet text-[0.75rem] -ml-[0.1] p-2 lg:flex lg:w-[100%] lg:p-3 lg:rounded-[3rem] lg:justify-center">
-                Tweet
-              </button>
-              <button className="max-w-[45px] scale-[.75] p-1 fixed lg:max-w-[250px] lg:py-2 lg:px-3 rounded-[3rem] bottom-6 flex items-center gap-2 border-none cursor-pointer bg-twitterWhite overflow-hidden hover:bg-hover ">
-                <div className="">
-                  <Image src="/x-icon.png" alt="" className="avatar" width={20} height={20} />
-                </div>
-                <div className="">
-                  <div className="font-bold pb-1 flex text-left text-twitterBlack">
-                    <div className="text-left">@{token.username}</div>
-                    {token.isPremium && (
-                      <span className="blue-tick" data-blue="verifiedBlue">
-                        <AiFillTwitterCircle />
-                      </span>
+    return (
+        <>
+            <aside className="left-sidebar">
+                <div className="fixed gap-8 flex flex-col items-start">
+                    <Link href="/explore" className="p-4 w-fit">
+                        <Image src='/X-icon.png' alt='logo' width={20} height={20}/>
+                    </Link>
+                    <nav>
+                        <ul className="gap-4 flex flex-col pr-5" >
+                            {token && (
+                                <li className= 'm-auto'>
+                                    <Link href="/home">
+                                        <div className={`text-[20px] p-0 mb-5  rounded-[5rem] inline-flex transition-colors ease-in-out text-twitterLightBlack hover:bg-hover items-center ${pathname.startsWith("/home") ? "font-black" : ""}`}>
+                                            <FaHome className='p-0 mr-3 text-twitterMuted'/> <span className="hidden lg:block">Home</span>
+                                        </div>
+                                    </Link>
+                                </li>
+                            )}
+                            <li className= 'm-auto'>
+                                <Link href="/explore">
+                                    <div className={`text-[20px] p-0 mb-5  rounded-[5rem] inline-flex transition-colors ease-in-out text-twitterLightBlack hover:bg-hover items-center ${pathname.startsWith("/explore") ? "font-black" : ""}`}>
+                                        <FaHashtag className='p-0 mr-3 text-twitterMuted'/> <span className="hidden lg:block">Explore</span>
+                                    </div>
+                                </Link>
+                            </li>
+                            {token && (
+                                <>
+                                    <li className= 'm-auto'>
+                                        <Link href="/notifications">
+                                            <div
+                                                className={`text-[20px] p-0 mb-5  rounded-[5rem] inline-flex transition-colors ease-in-out text-twitterLightBlack hover:bg-hover items-center ${
+                                                    pathname.startsWith("/notifications") ? "font-black" : ""
+                                                }`}
+                                            >
+                                                <div className="relative">
+                                                    <FaBell className='p-0 mr-3 text-twitterMuted'/> <UnreadNotificationsBadge />
+                                                </div>
+                                                <span className="hidden lg:block">Notifications</span>
+                                            </div>
+                                        </Link>
+                                    </li>
+                                    <li className= 'm-auto'>
+                                        <Link href="/messages">
+                                            <div className={`text-[20px] p-0 mb-5  rounded-[5rem] inline-flex transition-colors ease-in-out text-twitterLightBlack hover:bg-hover items-center ${pathname.startsWith("/messages") ? "font-black" : ""}`}>
+                                                <FaEnvelope className='p-0 mr-3 text-twitterMuted'/> <span className="hidden lg:block">Messages</span>
+                                            </div>
+                                        </Link>
+                                    </li>
+                                    <li className= 'm-auto'>
+                                        <Link href={`/${token.username}`}>
+                                            <div
+                                                className={`text-[20px] p-0 mb-5  rounded-[5rem] inline-flex transition-colors ease-in-out text-twitterLightBlack hover:bg-hover items-center ${
+                                                    pathname.startsWith(`/${token.username}`) ? "font-black" : ""
+                                                }`}
+                                            >
+                                                <FaUser className='p-0 mr-3 text-twitterMuted'/> <span className="hidden lg:block">Profile</span>
+                                            </div>
+                                        </Link>
+                                    </li>
+                                </>
+                            )}
+                        </ul>
+                    </nav>
+                    {token && (
+                        <>
+                            <button onClick={handleNewTweetClick} className="btn text-[.75rem] -ml-[0.1rem] p-2 flex w-full justify-center  rounded-[5rem]">
+                                Tweet
+                            </button>
+                            <button onClick={handleAnchorClick} className="max-w-[45px] scale-75 p-1 fixed bottom-6 flex gap-2 items-center xl:py-2 xl:px-3 border-none rounded-[5rem] cursor-pointer bg-twitterWhite xl:max-w-[250px] overflow-hidden hover:bg-hover">
+                                <div>
+                                    <Avatar
+                                        className="avatar"
+                                        alt=""
+                                        src={token.photoUrl ? getFullURL(token.photoUrl) : "/assets/egg.jpg"}
+                                    />
+                                </div>
+                                <div>
+                                    <div className="font-bold pb-0.25rem flex text-left text-twitterBlack">
+                                        {token.name !== "" ? token.name : token.username}
+                                        {token.isPremium && (
+                                            <span className="blue-tick" data-blue="Verified Blue">
+                                                <AiFillTwitterCircle />
+                                            </span>
+                                        )}
+                                    </div>
+                                    <div className="text-[0.93rem] text-twitterMuted text-left ">@{token.username}</div>
+                                </div>
+                                <div className="pr-2 text-twitterBlack">
+                                    <FaEllipsisH />
+                                </div>
+                            </button>
+                            <Menu
+                                anchorEl={anchorEl}
+                                onClose={handleAnchorClose}
+                                open={Boolean(anchorEl)}
+                                anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "right",
+                                }}
+                                transformOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "right",
+                                }}
+                            >
+                                <MenuItem onClick={handleAnchorClose}>
+                                    <Link href={`/${token.username}`}>Profile</Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleAnchorClose}>
+                                    <Link href={`/${token.username}/edit`}>Edit Profile</Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleAnchorClose}>
+                                    <Link href="/settings">Settings</Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleLogOutClick}>Log Out</MenuItem>
+                            </Menu>
+                        </>
                     )}
-                  </div>
                 </div>
-                <div className="pr-2 text-twitterBlack">
-                  <FaEllipsisH />
-                </div>
-              </button>
-            </>
-          )} */}
-      </div>
-    </>
-  );
+            </aside>
+            {token && (
+                <>
+                    <NewTweetDialog open={isNewTweetOpen} handleNewTweetClose={handleNewTweetClose} token={token} />
+                    <LogOutDialog
+                        open={isLogOutOpen}
+                        handleLogOutClose={handleLogOutClose}
+                        logout={handleLogout}
+                        isLoggingOut={isLoggingOut}
+                    />
+                </>
+            )}
+        </>
+    );
 }
-
-export default LeftSidebar;

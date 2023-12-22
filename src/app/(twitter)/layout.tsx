@@ -7,9 +7,6 @@ import RightSidebar from "@/Components/Sidebars/RightSidebar";
 import { AuthProps } from "@/types/TokenTypes";
 import useAuth from "@/hooks/useAuth";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-const queryClient = new QueryClient();
 
 const AuthContext = createContext<AuthProps>({
   token: null,
@@ -22,19 +19,17 @@ export default function HomeLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const auth = useAuth();
+  const auth = useAuth()
 
   return (
-    <AuthContext.Provider value={auth}>
       <div className="layout">
+        <AuthContext.Provider value={auth}>
         <LeftSidebar />
-        <QueryClientProvider client={queryClient}>
           {children}
-        </QueryClientProvider>
         <RightSidebar />
-        {/* <Footer /> */}
+        </AuthContext.Provider>
       </div>
-    </AuthContext.Provider>
+
   );
 }
 

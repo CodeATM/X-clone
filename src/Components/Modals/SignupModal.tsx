@@ -1,121 +1,132 @@
-import React from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
-import * as Yup from "yup";
-import Input from "../input";
+import { Dialog, DialogContent, DialogTitle, InputAdornment, TextField } from "@mui/material";
+import * as yup from "yup";
 import Image from "next/image";
-import { FcGoogle } from "react-icons/fc";
-import {MdOutlineCancel} from "react-icons/md";
-import { logIn } from "@/utilities/fetch";
-import {useRouter} from 'next/navigation'
 
-type Props = {
-  isOpen: boolean;
-  onClose: () => void;
-};
+import { SignUpDialogProps } from "@/types/ModalProps";
+import { checkUserExists, createUser } from "@/utilities/fetch";
+import CircularLoading from "../mics/CircularLoading";
+import CustomSnackbar from "../mics/CustomSnackbar";
+import { SnackbarProps } from "@/types/snackbarProps";
 
-const SignupModal = ({ isOpen, onClose }: Props) => {
-  const router = useRouter();
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      email: "",
-      password: "",
-    },
-    validationSchema: Yup.object({
-      username: Yup.string()
-        .min(3, "Username should be of minimum 3 characters length.")
-        .max(20, "Username should be of maximum 20 characters length.")
-        .matches(/^[a-zA-Z0-9_]{1,14}[a-zA-Z0-9]$/, "Username is invalid")
-        .required("Username is required."),
-      password: Yup.string()
-        .min(8, "Password should be of minimum 8 characters length.")
-        .max(100, "Password should be of maximum 100 characters length.")
-        .required("Password is required."),
-    }),
-    onSubmit: async (values, { resetForm }) => {
-      alert('here')
-      const response = await logIn(JSON.stringify(values));
-      if (!response.success) {
-        alert('bad bad bad')
-      }
-      resetForm();
-      alert('done')
-      // handleLogInClose();
-      router.push("/explore");
-  },
-  });
+export default function SignUpDialog({ open, handleSignUpClose }: SignUpDialogProps) {
+    const [snackbar, setSnackbar] = useState<SnackbarProps>({ message: "", severity: "success", open: false });
 
-  return (
-    <div
-      className={
-        isOpen
-          ? "fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-40 z-50 flex justify-center items-center px-4 opacity-1 visible transition duration-300"
-          : "opacity-0 hidden"
-      }
-    >
-      <div className="absolute right-7 top-7 cursor-pointer">
-        <MdOutlineCancel className = 'text-2xl' onClick={() => onClose()}/>
-      </div>
+    const router = useRouter();
 
-      <div className="w-[90%] md:w-[50%] xl:w-[26%]">
-        <div className="bg-twitterLightGray px-8 py-10 flex flex-col">
-          <div className="flex justify-center">
-            <Image src="/x-icon.png" alt="" width={40} height={40} />
-          </div>
-          <h1 className="text-[1.5rem] font-[700] text-center p-4">
-            Sign in to your account
-          </h1>
-          <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4">
-            <div className="">
-              <Input
-                id="username"
-                label="username"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.username}
-              />
-              {formik.touched.username && formik.errors.username ? (
-                <div className="text-red-500 text-sm tracking-wide">
-                  {formik.errors.username}
-                </div>
-              ) : null}
-            </div>
+    const validationSchema = yup.object({
+        username: yup
+            .string()
+            .min(3, "Username should be of minimum 3 characters length.")
+            .max(20, "Username should be of maximum 20 characters length.")
+            .matches(/^[a-zA-Z0-9_]{1,14}[a-zA-Z0-9]$/, "Username is invalid")
+            .required("Username is required.")
+            .test("checkUserExists", "User already exists.", async (value) => {
+                if (value) {
+                    const response = await checkUserExists(value);
+                    if (response.success) return false;
+                }
+                return true;
+            }),
+        password: yup
+            .string()
+            .min(8, "Password should be of minimum 8 characters length.")
+            .max(100, "Password should be of maximum 100 characters length.")
+            .required("Password is required."),
+        name: yup.string().max(50, "Name should be of maximum 50 characters length."),
+    });
 
-            <div className="">
-              <Input
-                id="password"
-                // name="email"
-                type="password"
-                label="Password"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.password}
-              />
-              {formik.touched.password && formik.errors.password ? (
-                <div className="text-red-500 text-sm tracking-wide">
-                  {formik.errors.password}
-                </div>
-              ) : null}
-            </div>
+    const formik = useFormik({
+        initialValues: {
+            username: "",
+            password: "",
+            name: "",
+        },
+        validationSchema: validationSchema,
+        onSubmit: async (values, { resetForm }) => {
+            const response = await createUser(JSON.stringify(values));
+            if (!response.success) {
+                return setSnackbar({
+                    message: "Something went wrong. Please try again.",
+                    severity: "error",
+                    open: true,
+                });
+            }
+            resetForm();
+            handleSignUpClose();
+            router.push("/explore");
+        },
+    });
 
-            <button
-              type="submit"
-              className="btn btn-light w-full bg-white text-black"
-            >
-              Submit
-            </button>
-            <div className="text-center flex gap-x-1 items-center justify-center cursor-pointer">
-              <FcGoogle className="text-[1.5rem]" />
-              <p className="text-sm font-[300] tracking-wider">
-                Create an account with google
-              </p>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default SignupModal;
+    return (
+        <Dialog className="dialog" open={open} onClose={handleSignUpClose}>
+            <Image className="m-auto pt-4" src="/X-icon.png" alt="" width={40} height={40} />
+            <DialogTitle className="text-[1.75rem] font-bold text-twitterBlack text-center p-4">Create your account</DialogTitle>
+            <form className="w-full flex flex-col" onSubmit={formik.handleSubmit}>
+                <DialogContent>
+                    <div className="input-group">
+                        <div className="p-2 min-w-[20vw]">
+                            <div className="pb-3 text-twitterGray">Your login information</div>
+                            <TextField
+                                required
+                                fullWidth
+                                name="username"
+                                label="Username"
+                                placeholder="username"
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start">@</InputAdornment>,
+                                }}
+                                value={formik.values.username}
+                                onChange={formik.handleChange}
+                                error={Boolean(formik.errors.username)}
+                                helperText={formik.errors.username}
+                                autoFocus
+                            />
+                        </div>
+                        <div className="p-2 min-w-[20vw]">
+                            <TextField
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                value={formik.values.password}
+                                onChange={formik.handleChange}
+                                error={Boolean(formik.errors.password)}
+                                helperText={formik.errors.password}
+                            />
+                        </div>
+                        <div className="p-2 min-w-[20vw]">
+                            <div className="pb-3 text-twitterGray">Your public name</div>
+                            <TextField
+                                fullWidth
+                                name="name"
+                                label="Name"
+                                value={formik.values.name}
+                                onChange={formik.handleChange}
+                                error={formik.touched.name && Boolean(formik.errors.name)}
+                                helperText={formik.touched.name && formik.errors.name}
+                            />
+                        </div>
+                    </div>
+                </DialogContent>
+                {formik.isSubmitting ? (
+                    <CircularLoading />
+                ) : (
+                    <button
+                        className={`btn w-[75%] m-auto mb-12 text-twitterWhite bg-twitterBlack hover:bg-twitterLightBlack hover:text-twitterWhite ${formik.isValid ? "" : "disabled"}`}
+                        type="submit"
+                        disabled={!formik.isValid}
+                    >
+                        Create
+                    </button>
+                )}
+            </form>
+            {snackbar.open && (
+                <CustomSnackbar message={snackbar.message} severity={snackbar.severity} setSnackbar={setSnackbar} />
+            )}
+        </Dialog>
+    );
+}

@@ -21,8 +21,8 @@ export default function HomePage() {
     if (isPending || isLoading) return <CircularLoading />;
 
     return (
-        <main>
-            <h1 className="page-name">Home</h1>
+        <main className="relative w-full" >
+            <h1 className="py-8 px-4 font-bold text-[1.25rem] border-b-[1px] border-borderColor sticky z-50 top-0 bg-backgroundPrimary opacity-90">Home</h1>
             {token && <NewTweet token={token} />}
             {data && data.tweets.length === 0 && <NothingToShow />}
             <Tweets tweets={data.tweets} />

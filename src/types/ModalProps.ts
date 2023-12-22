@@ -1,11 +1,11 @@
 import { UserTypes } from "./userTypes";
 
-export type ModalProps = {
-    toggleState: number;
-    toggleTab: any;
+export type LogInDialogProps = {
+    open: boolean;
+    handleLogInClose: () => void;
 };
 
-export type SignUpModal = {
+export type SignUpDialogProps = {
     open: boolean;
     handleSignUpClose: () => void;
 };

@@ -1,31 +1,30 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import { useRouter } from "next/router";
 import Link from "next/link";
-import SignupModal from "@/Components/Modals/SignupModal";
-import LoginModal from "@/Components/Modals/LoginModal";
+import SignUpDialog from "@/Components/Modals/SignupModal";
+import LogInDialog from "@/Components/Modals/LoginModal";
 import LoadingComponent from "@/Components/LoadingComponent";
+import CustomSnackbar from "@/Components/mics/CustomSnackbar";
+import { SnackbarProps } from "@/types/snackbarProps";
 
 export default function Home() {
-  const router = useRouter;
-  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
-  const [isSignupModalOpen, setSgnupModalOpen] = useState(false);
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [isLogInOpen, setIsLogInOpen] = useState(false);
+  const [isLoggingAsTest, setIsLoggingAsTest] = useState(false);
 
-  const openLoginModal = () => {
-    setLoginModalOpen(true);
+
+  const handleSignUpClick = () => {
+    setIsSignUpOpen(true);
   };
-
-  const closeLoginModal = () => {
-    setLoginModalOpen(false);
+  const handleSignUpClose = () => {
+    setIsSignUpOpen(false);
   };
-
-  const openSignupModal = () => {
-    setSgnupModalOpen(true);
+  const handleLogInClick = () => {
+    setIsLogInOpen(true);
   };
-
-  const closeSignupModal = () => {
-    setSgnupModalOpen(false);
+  const handleLogInClose = () => {
+    setIsLogInOpen(false);
   };
 
   return (
@@ -41,14 +40,18 @@ export default function Home() {
           </h1>
           <p className="font-bold text-[0.9rem]">Join X today.</p>
           <div className="flex flex-col gap-4 justify-center">
-            <button className="btn" onClick={openLoginModal}>Create account</button>
-            <button className="btn btn-light" onClick={openSignupModal}>Sign in</button>
+            <button className="btn" onClick={handleSignUpClick}>
+              Create account
+            </button>
+            <button className="btn btn-light" onClick={handleLogInClick}>
+              Sign in
+            </button>
           </div>
         </div>
       </main>
 
-      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
-      <SignupModal isOpen={isSignupModalOpen} onClose={closeSignupModal} />
+      <SignUpDialog open={isSignUpOpen} handleSignUpClose={handleSignUpClose} />
+      <LogInDialog open={isLogInOpen} handleLogInClose={handleLogInClose} />
     </>
   );
 }

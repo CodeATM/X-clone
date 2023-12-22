@@ -13,12 +13,12 @@ body {
   /* font-family: var(--font-roboto); */
 }
 
-.overflow{
+.overflow {
   overflow-wrap: anywhere;
 }
 
-.grid-col{
-  grid-template-columns: auto minmax(300px, 1fr) minmax(90px, auto) 
+.grid-col {
+  grid-template-columns: auto minmax(300px, 1fr) minmax(90px, auto);
 }
 
 .confirm {
@@ -68,9 +68,51 @@ main {
   position: relative;
 }
 
+.left-sidebar {
+  position: relative;
+  margin-left: auto;
+  min-width: 230px;
+  padding-left: 1rem;
+  border-right: 1px solid #1e2022;
+  height: 100%;
+  align-items: start;
+}
+
+.blue-tick {
+  vertical-align: top;
+  color: var(--twitter-blue);
+  margin-left: 2px;
+  display: inline-flex;
+  position: relative;
+}
+.blue-tick::after {
+  content: attr(data-blue);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  background-color: var(--twitter-blue);
+  color: var(--const-white);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.blue-tickhover::after {
+  opacity: 1;
+}
+
 @media screen and (max-width: 1300px) {
   .layout {
     grid-template-columns: auto minmax(360px, 600px) 1fr;
+  }
+
+  .left-sidebar {
+    min-width: 190px;
   }
 }
 
@@ -78,14 +120,33 @@ main {
   .layout {
     grid-template-columns: auto minmax(360px, 1fr) 330px;
   }
+  .left-sidebar {
+    min-width: 60px;
+  }
 }
 
 @media screen and (max-width: 500px) {
   .layout {
-    display: flex;
-    width: 100%;
+    grid-template-columns: auto minmax(360px, 1fr) 0;
+  }
+  .left-sidebar {
+    min-width: 60px;
   }
 }
+
+@media screen and (max-width: 850px) {
+  .layout {
+    grid-template-columns: auto minmax(360px, 1fr) 0;
+  }
+  .left-sidebar {
+    min-width: 60px;
+  }
+}
+
+/* .MuiPaper-root {
+  background-color: #000000 !important;
+  color: #d1dce4 !important;
+} */
 
 .btn-white {
   color: #f8f8f8;
@@ -106,12 +167,6 @@ main {
 .btn-dark:hover {
   background-color: #cecece;
   color: #16181c;
-}
-
-@media screen and (max-width: 850px) {
-  .layout {
-    grid-template-columns: auto minmax(360px, 1fr) 0;
-  }
 }
 
 .mini-profile {

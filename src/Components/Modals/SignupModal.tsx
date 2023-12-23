@@ -61,12 +61,12 @@ export default function SignUpDialog({ open, handleSignUpClose }: SignUpDialogPr
     });
 
     return (
-        <Dialog className="dialog" open={open} onClose={handleSignUpClose}>
-            <Image className="m-auto pt-4" src="/X-icon.png" alt="" width={40} height={40} />
+        <Dialog className="dialog py-4" open={open} onClose={handleSignUpClose}>
+            <Image className="m-auto pt-4" src="/x-icon.png" alt="" width={40} height={40} />
             <DialogTitle className="text-[1.75rem] font-bold text-twitterBlack text-center p-4">Create your account</DialogTitle>
             <form className="w-full flex flex-col gap-2" onSubmit={formik.handleSubmit}>
                 <DialogContent>
-                    <div className="input-group">
+                    <div className="input-group gap-4">
                         <div className="p-2 min-w-[20vw]">
                             <div className="pb-3 text-twitterGray">Your login information</div>
                             <TextField

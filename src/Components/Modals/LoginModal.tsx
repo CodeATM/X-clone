@@ -49,12 +49,12 @@ export default function LogInDialog({ open, handleLogInClose }: LogInDialogProps
     });
 
     return (
-        <Dialog className="dialog" open={open} onClose={handleLogInClose}>
+        <Dialog className="dialog py-4" open={open} onClose={handleLogInClose}>
             <Image className="m-auto pt-4" src="/X-icon.png" alt="" width={40} height={40} />
             <DialogTitle className="text-[1.75rem] font-bold text-twitterBlack text-center p-4">Sign in to Twitter</DialogTitle>
             <form className="w-full flex flex-col gap-2" onSubmit={formik.handleSubmit}>
                 <DialogContent>
-                    <div className="input-group">
+                    <div className="input-group gap-4">
                         <div className="p-2 min-w-[20vw]">
                             <TextField
                                 fullWidth

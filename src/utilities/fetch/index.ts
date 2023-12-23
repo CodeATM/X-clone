@@ -35,7 +35,7 @@ export const deleteTweet = async (tweetId: string, tweetAuthor: string, tokenOwn
 };
 
 export const checkUserExists = async (username: string) => {
-    const response = await fetch(`${process.env.NEXT_HOST_URL}/api/user/exist?q=${username}`);
+    const response = await fetch(`/api/user/exist?q=${username}`);
     return response.json();
 };
 

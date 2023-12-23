@@ -89,21 +89,21 @@ export async function POST(
 
     await newTweet.save();
 
-    // if (username !== verifiedToken.username) {
-    //   // Create a notification
-    //   const notification = new Notification({
-    //     sender: {
-    //       username: verifiedToken.username,
-    //       name: verifiedToken.name,
-    //       photoUrl: verifiedToken.photoUrl,
-    //     },
-    //     content: {
-    //       id: tweetId,
-    //     },
-    //   });
+    if (username !== verifiedToken.username) {
+      // Create a notification
+      const notification = new Notification({
+        sender: {
+          username: verifiedToken.username,
+          name: verifiedToken.name,
+          photoUrl: verifiedToken.photoUrl,
+        },
+        content: {
+          id: tweetId,
+        },
+      });
 
-    //   await notification.save();
-    // }
+      await notification.save();
+    }
 
     return NextResponse.json({ success: true });
   } catch (error: unknown) {

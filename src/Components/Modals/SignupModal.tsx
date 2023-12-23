@@ -64,7 +64,7 @@ export default function SignUpDialog({ open, handleSignUpClose }: SignUpDialogPr
         <Dialog className="dialog" open={open} onClose={handleSignUpClose}>
             <Image className="m-auto pt-4" src="/X-icon.png" alt="" width={40} height={40} />
             <DialogTitle className="text-[1.75rem] font-bold text-twitterBlack text-center p-4">Create your account</DialogTitle>
-            <form className="w-full flex flex-col" onSubmit={formik.handleSubmit}>
+            <form className="w-full flex flex-col gap-2" onSubmit={formik.handleSubmit}>
                 <DialogContent>
                     <div className="input-group">
                         <div className="p-2 min-w-[20vw]">

@@ -126,6 +126,7 @@ export const getAllTweets = async (page = "1") => {
 
 export const createTweet = async (tweet: string) => {
     console.log('Na here i dey to tweet')
+    console.log(tweet)
     const response = await fetch(`/api/tweet/create`, {
         method: "POST",
         headers: {
@@ -133,6 +134,7 @@ export const createTweet = async (tweet: string) => {
         },
         body: tweet,
     });
+
     const json = await response.json();
     if (!json.success) throw new Error(json.message ? json.message : "Something went wrong.");
     return json;

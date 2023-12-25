@@ -15,11 +15,11 @@ export default function LogOutDialog({ open, handleLogOutClose, logout, isLoggin
             {isLoggingOut ? (
                 <CircularLoading />
             ) : (
-                <div className="gap-3 mb-6 items-center button-group">
-                    <button className="btn w-[75%] text-twitterWhite bg-twitterBlack hover:bg-twitterLightBlack text-twitterWhite" onClick={logout} autoFocus>
+                <div className="flex flex-col gap-3 mb-6 items-center button-group">
+                    <button className="btn w-[75%] text-twitterWhite bg-twitterBlack hover:bg-twitterLightBlack hover:text-twitterWhite" onClick={logout} autoFocus>
                         Log out
                     </button>
-                    <button className="btn w-[75%] text-twitterBlack bg-backgroundPrimary border-[1px] border-twitterLightGray hover:bg-hover text-twitterBlack" onClick={handleLogOutClose}>
+                    <button className="btn w-[75%] text-twitterBlack bg-backgroundPrimary border-[1px] border-twitterLightGray hover:bg-hover hover:text-twitterBlack" onClick={handleLogOutClose}>
                         Cancel
                     </button>
                 </div>

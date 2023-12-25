@@ -53,35 +53,35 @@ export default function LeftSidebar() {
 
     return (
         <>
-            <aside className="left-sidebar">
+            <aside className="left-sidebar justify-start">
                 <div className="fixed gap-8 flex flex-col items-start">
                     <Link href="/explore" className="p-4 w-fit">
                         <Image src='/X-icon.png' alt='logo' width={20} height={20}/>
                     </Link>
                     <nav>
-                        <ul className="gap-4 flex flex-col pr-5" >
+                        <ul className="gap-4 flex flex-col pr-5 justify-start text-start items-start" >
                             {token && (
                                 <li className= 'm-auto'>
                                     <Link href="/home">
-                                        <div className={`text-[20px] p-0 mb-5  rounded-[5rem] inline-flex transition-colors ease-in-out text-twitterLightBlack hover:bg-hover items-center ${pathname.startsWith("/home") ? "font-black" : ""}`}>
+                                        <div className={`text-[20px] p-0 lg:p-3 rounded-[5rem] inline-flex transition-colors ease-in-out text-twitterLightBlack hover:bg-hover items-center ${pathname.startsWith("/home") ? "font-black" : ""}`}>
                                             <FaHome className='p-0 mr-3 text-twitterMuted'/> <span className="hidden lg:block">Home</span>
                                         </div>
                                     </Link>
                                 </li>
                             )}
-                            <li className= 'm-auto'>
+                            <li className= 'm-auto '>
                                 <Link href="/explore">
-                                    <div className={`text-[20px] p-0 mb-5  rounded-[5rem] inline-flex transition-colors ease-in-out text-twitterLightBlack hover:bg-hover items-center ${pathname.startsWith("/explore") ? "font-black" : ""}`}>
+                                    <div className={`text-[20px] p-0 lg:p-3 rounded-[5rem] inline-flex transition-colors ease-in-out text-twitterLightBlack hover:bg-hover items-center ${pathname.startsWith("/explore") ? "font-black" : ""}`}>
                                         <FaHashtag className='p-0 mr-3 text-twitterMuted'/> <span className="hidden lg:block">Explore</span>
                                     </div>
                                 </Link>
                             </li>
                             {token && (
                                 <>
-                                    <li className= 'm-auto'>
+                                    <li className= 'm-auto '>
                                         <Link href="/notifications">
                                             <div
-                                                className={`text-[20px] p-0 mb-5  rounded-[5rem] inline-flex transition-colors ease-in-out text-twitterLightBlack hover:bg-hover items-center ${
+                                                className={`text-[20px] p-0 lg:p-3 rounded-[5rem] inline-flex transition-colors ease-in-out text-twitterLightBlack hover:bg-hover items-center ${
                                                     pathname.startsWith("/notifications") ? "font-black" : ""
                                                 }`}
                                             >
@@ -94,7 +94,7 @@ export default function LeftSidebar() {
                                     </li>
                                     <li className= 'm-auto'>
                                         <Link href="/messages">
-                                            <div className={`text-[20px] p-0 mb-5  rounded-[5rem] inline-flex transition-colors ease-in-out text-twitterLightBlack hover:bg-hover items-center ${pathname.startsWith("/messages") ? "font-black" : ""}`}>
+                                            <div className={`text-[20px] p-0 lg:p-3 rounded-[5rem] inline-flex transition-colors 0ease-in-out text-twitterLightBlack hover:bg-hover items-center ${pathname.startsWith("/messages") ? "font-black" : ""}`}>
                                                 <FaEnvelope className='p-0 mr-3 text-twitterMuted'/> <span className="hidden lg:block">Messages</span>
                                             </div>
                                         </Link>
@@ -102,7 +102,7 @@ export default function LeftSidebar() {
                                     <li className= 'm-auto'>
                                         <Link href={`/${token.username}`}>
                                             <div
-                                                className={`text-[20px] p-0 mb-5  rounded-[5rem] inline-flex transition-colors ease-in-out text-twitterLightBlack hover:bg-hover items-center ${
+                                                className={`text-[20px] p-0 lg:p-3 rounded-[5rem] inline-flex transition-colors ease-in-out text-twitterLightBlack hover:bg-hover items-center ${
                                                     pathname.startsWith(`/${token.username}`) ? "font-black" : ""
                                                 }`}
                                             >

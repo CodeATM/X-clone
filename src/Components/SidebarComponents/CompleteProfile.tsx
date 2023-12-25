@@ -76,7 +76,7 @@ export default function CompleteProfileReminder({ token }: { token: UserTypes })
                                 </Tooltip>
                             )}
                         </ol>
-                        <Link href={`/${token.username}/edit`} className="btn text-twitterWhite bg-twitterBlack hover:bg-twitterLightBlack hover:text-twitterWhite">
+                        <Link href={`/${token.username}/edit`} className="btn text-twitterWhite bg-twitterBlack hover:bg-twitterLightBlack hover:text-twitterWhite text-center">
                             Edit Profile
                         </Link>
                     </div>

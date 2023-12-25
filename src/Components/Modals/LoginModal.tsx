@@ -50,7 +50,7 @@ export default function LogInDialog({ open, handleLogInClose }: LogInDialogProps
 
     return (
         <Dialog className="dialog py-4" open={open} onClose={handleLogInClose}>
-            <Image className="m-auto pt-4" src="/X-icon.png" alt="" width={40} height={40} />
+            <Image className="m-auto pt-4" src="/x-icon.png" alt="" width={40} height={40} />
             <DialogTitle className="text-[1.75rem] font-bold text-twitterBlack text-center p-4">Sign in to Twitter</DialogTitle>
             <form className="w-full flex flex-col gap-2" onSubmit={formik.handleSubmit}>
                 <DialogContent>

@@ -1,7 +1,7 @@
 const verifyToken = async (token:string) => {
     const URL = process.env.NEXT_URL
 
-    const response = await fetch(`${URL}/api/auth/verify`, {
+    const response = await fetch(`/api/auth/verify`, {
         method: 'POST',
         headers: {
             'Content-Type': "application/json"

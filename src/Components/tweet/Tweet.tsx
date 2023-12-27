@@ -31,9 +31,9 @@ export default function Tweet({ tweet }: { tweet: TweetProps }) {
 
     let displayedTweet = tweet;
 
-    if (tweet.isRetweet) {
-        displayedTweet = tweet.retweetOf;
-    }
+    // if (tweet.isRetweet) {
+    //     displayedTweet = tweet.retweetOf;
+    // }
 
     // console.log(tweet._id)
 

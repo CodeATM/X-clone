@@ -48,7 +48,7 @@ export async function POST(
     tweet.likedBy.push(tokenOwnerId);
     await tweet.save();
 
-    if (username !== verifiedToken.username) {
+    if (username == verifiedToken.username) {
       // Create a notification
       const notification = new Notification({
         sender: {

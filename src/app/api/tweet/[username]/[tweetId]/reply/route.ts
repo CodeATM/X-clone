@@ -90,6 +90,8 @@ export async function POST(
     await newTweet.save();
 
     if (username !== verifiedToken.username) {
+      console.log('notification')
+
       // Create a notification
       const notification = new Notification({
         sender: {

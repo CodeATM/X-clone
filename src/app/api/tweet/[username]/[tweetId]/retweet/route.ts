@@ -56,6 +56,7 @@ export async function POST(
 
     if (username !== verifiedToken.username) {
       // Create a notification
+      console.log('crete tweet')
       const notification = new Notification({
         sender: {
           username: verifiedToken.username,

@@ -60,7 +60,7 @@ export async function POST(
       photoUrl: originalTweet.photoUrl,
     });
 
-    if (username !== verifiedToken.username) {
+    if (username == verifiedToken.username) {
       // Create a notification
       console.log('create tweet');
       const notification = new Notification({

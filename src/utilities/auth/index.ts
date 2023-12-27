@@ -1,7 +1,7 @@
 const verifyToken = async (token:string) => {
     const URL = process.env.NEXT_URL
 
-    const response = await fetch(`http://localhost:3000//api/auth/verify`, {
+    const response = await fetch(`https://x-clone-f4l1.onrender.com/api/auth/verify`, {
         method: 'POST',
         headers: {
             'Content-Type': "application/json"

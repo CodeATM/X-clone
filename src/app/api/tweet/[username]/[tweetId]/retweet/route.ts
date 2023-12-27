@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDB } from "@/utilities/mongoose";
-import {cookies} from 'next/headers'
+import { cookies } from 'next/headers'
 import { UserTypes } from "@/types/userTypes";
 import Tweet from '@/models/tweet.schema'
 import { verifyJwtToken } from "@/utilities/auth";
@@ -10,7 +10,7 @@ export async function POST(
   request: NextRequest,
   { params: { tweetId, username } }: { params: { tweetId: string; username: string } }
 ) {
-  await connectToDB()
+  await connectToDB();
   const tokenOwnerId = await request.json();
 
   const cookieStore = cookies();
@@ -33,6 +33,13 @@ export async function POST(
     return NextResponse.json({ success: false, message: "You are not authorized to perform this action." });
 
   try {
+    // Fetch the original tweet
+    const originalTweet = await Tweet.findById(tweetId).exec();
+
+    if (!originalTweet) {
+      return NextResponse.json({ success: false, message: "Original tweet not found." });
+    }
+
     // Update the tweet to connect the retweeter
     await Tweet.findByIdAndUpdate(
       tweetId,
@@ -44,19 +51,18 @@ export async function POST(
       { new: true }
     );
 
-    // Create a new tweet representing the retweet
+    // Create a new tweet representing the retweet with original tweet content
     const newRetweet = await Tweet.create({
       isRetweet: true,
-      text: "",
+      text: originalTweet.text,
       author: tokenOwnerId,
       retweetOf: tweetId,
+      photoUrl: originalTweet.photoUrl,
     });
-
-    // await newRetweet.save();
 
     if (username !== verifiedToken.username) {
       // Create a notification
-      console.log('crete tweet')
+      console.log('create tweet');
       const notification = new Notification({
         sender: {
           username: verifiedToken.username,
@@ -76,3 +82,4 @@ export async function POST(
     return NextResponse.json({ success: false, error });
   }
 }
+

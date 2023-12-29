@@ -3,9 +3,13 @@ import {cookies} from 'next/headers'
 import { UserTypes } from "@/types/userTypes";
 import Message from "@/models/messages.model";
 import { verifyJwtToken } from "@/utilities/auth";
+import Notification from "@/models/notification.model";
 import User from '@/models/users.schema'
+import { shouldCreateNotification } from "@/utilities/Misc/shouldCreateNotification";
+import { connectToDB } from "@/utilities/mongoose";
 
 export async function POST(request: NextRequest) {
+  await connectToDB()
   const { recipient, sender, text, photoUrl } = await request.json();
 
   const cookieStore = cookies();
@@ -34,6 +38,9 @@ export async function POST(request: NextRequest) {
     const isRecipient = await User.findOne({
       username: recipient,
     });
+    const isSender = await User.findOne({
+      username: sender,
+    });
 
     if (!isRecipient) {
       return NextResponse.json({ success: false, message: "Recipient does not exist." });
@@ -42,25 +49,26 @@ export async function POST(request: NextRequest) {
     await Message.create({
       text,
       photoUrl,
-      sender: sender,
+      sender: isSender._id,
       recipient: isRecipient._id,
     });
 
-    // if (recipient !== verifiedToken.username && (await shouldCreateNotification(verifiedToken.username, recipient))) {
-    //   const notificationContent = {
-    //     sender: {
-    //       username: verifiedToken.username,
-    //       name: verifiedToken.name,
-    //       photoUrl: verifiedToken.photoUrl,
-    //     },
-    //     content: null,
-    //   };
+    if (recipient !== verifiedToken.username && (await shouldCreateNotification(verifiedToken.username, recipient))) {
+      const notificationContent = {
+        sender: {
+          username: verifiedToken.username,
+          name: verifiedToken.name,
+          photoUrl: verifiedToken.photoUrl,
+        },
+        content: null,
+      };
 
-    //   await Notification.create(recipient, "message", secret, notificationContent);
-    // }
+      await Notification.create(recipient, "message", secret, notificationContent);
+    }
 
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
+    console.log(error)
     return NextResponse.json({ success: false, error });
   }
 }

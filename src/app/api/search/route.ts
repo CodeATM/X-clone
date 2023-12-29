@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import Tweet from '@/models/tweet.schema'
+import { connectToDB } from "@/utilities/mongoose";
 
 export async function GET(request: NextRequest) {
+  connectToDB()
   const query = request.nextUrl.searchParams.get("q");
 
   if (!query) return NextResponse.json({ success: false, message: "Missing query." });
 
   try {
     const tweets = await Tweet.find({
-      $or: [
+      $in: [
         {
           text: {
             $regex: query,
@@ -17,7 +19,7 @@ export async function GET(request: NextRequest) {
         },
         {
           author: {
-            $or: [
+            $in: [
               {
                 name: {
                   $regex: query,
@@ -70,6 +72,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ success: true, tweets });
   } catch (error: unknown) {
+    console.log(error)
     return NextResponse.json({ success: false, error });
   }
 }

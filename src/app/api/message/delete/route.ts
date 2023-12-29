@@ -3,8 +3,10 @@ import {cookies} from 'next/headers'
 import { UserTypes } from "@/types/userTypes";
 import Message from "@/models/messages.model";
 import { verifyJwtToken } from "@/utilities/auth";
+import { connectToDB } from "@/utilities/mongoose";
 
 export async function POST(request: NextRequest) {
+  connectToDB()
   const { tokenOwnerId, participants }: { tokenOwnerId: string; participants: string[] } = await request.json();
 
   const cookieStore = cookies()

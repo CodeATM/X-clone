@@ -4,8 +4,10 @@ import Message from "@/models/messages.model";
 import { verifyJwtToken } from "@/utilities/auth";
 import Users from "@/models/users.schema";
 import { UserTypes } from "@/types/userTypes";
+import { connectToDB } from "@/utilities/mongoose";
 
 export async function GET(request: NextRequest, { params: { username } }: { params: { username: string } }) {
+  connectToDB()
   const cookieStore = cookies();
   const token = cookieStore.get("token")?.value;
   const verifiedToken = token && (await verifyJwtToken(token));
@@ -21,6 +23,7 @@ export async function GET(request: NextRequest, { params: { username } }: { para
   try {
     // Assuming you have a User model to connect to
     const user = await Users.findOne({ username });
+    // console.log(user)
 
     if (!user) {
       return NextResponse.json({ success: false, message: "User not found." });
@@ -41,6 +44,8 @@ export async function GET(request: NextRequest, { params: { username } }: { para
         select: "name username photoUrl isPremium",
       })
       .sort({ createdAt: "asc" });
+
+      console.log(messages)
 
       const conversations: any = {};
 
@@ -76,6 +81,7 @@ export async function GET(request: NextRequest, { params: { username } }: { para
 
     return NextResponse.json({ success: true, formattedConversations });
   } catch (error: unknown) {
+    console.error(error)
     return NextResponse.json({ success: false, error });
   }
 }

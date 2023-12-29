@@ -5,6 +5,7 @@ import { verifyJwtToken } from "@/utilities/auth";
 import User from '@/models/users.schema'
 import { connectToDB } from "@/utilities/mongoose";
 export async function GET(request: NextRequest) {
+  console.log('i got here')
   await connectToDB()
   const cookieStore = cookies();
   const token = cookieStore.get("token")?.value;

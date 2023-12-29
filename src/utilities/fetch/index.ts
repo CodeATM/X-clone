@@ -325,7 +325,7 @@ export const  createMessage = async (message: string) => {
 };
 
 export const deleteConversation = async (participants: string[], tokenOwnerId: string) => {
-    const response = await fetch(`/api/messagez/delete`, {
+    const response = await fetch(`/api/message/delete`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

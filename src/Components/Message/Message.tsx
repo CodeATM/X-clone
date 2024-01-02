@@ -18,7 +18,7 @@ export default function Message({ message, messagedUsername }: { message: Messag
     };
 
     return (
-        <div className={`message ${message.sender.username === messagedUsername ? "message-left" : "ml-auto text-right bg-twitter-blue text-constWhite"}`}>
+        <div className={`message ${message.sender.username === messagedUsername ? "message-left" : "ml-auto text-end bg-twitter-blue text-constWhite"}`}>
             <div className=" whitespace-pre-line text-[0.9rem] bg-hover rounded-[1.2rem] py-3 px-4 w-fit max-w-[310px] overflow">{message.text}</div>
             {message.photoUrl && (
                 <>

@@ -17,7 +17,7 @@ import PreviewDialog from "@/Components/Modals/PreviewModal";
 import { getFullURL } from "@/utilities/getFullURL";
 import { AuthContext } from "@/app/(twitter)/layout";
 import RetweetIcon from "../../Components/mics/RetweetIcon";
-import ProfileCard from "../user/ProfileCard";
+import ProfileCard from "@/Components/user/ProfileCard";
 
 export default function Tweet({ tweet }: { tweet: TweetProps }) {
     const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -74,7 +74,7 @@ export default function Tweet({ tweet }: { tweet: TweetProps }) {
     return (
         <motion.div
             onClick={handleTweetClick}
-            className={`border-b-[1px] border-borderColor p-4 flex items-start gap-2 overflow-hidden transition-color ease-in-out hover:bg-hover div-link${tweet.isRetweet && "retweet"} ${displayedTweet.isReply && "reply"}`}
+            className={`border-b-[1px] border-borderColor p-4 flex items-start gap-2 overflow-hidden transition-color ease-in-out hover:bg-hover cursor-pointer ${tweet.isRetweet && "px-4 pt-8 pb-4 relative"} ${displayedTweet.isReply && "reply"}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -169,7 +169,7 @@ export default function Tweet({ tweet }: { tweet: TweetProps }) {
             </div>
             {tweet.isRetweet &&
                 (token?.username === tweet.author.username ? (
-                    <Link onClick={handlePropagation} href={`/${token?.username}`} className="retweeted-by">
+                    <Link onClick={handlePropagation} href={`/${token?.username}`} className="absolute top-2 left-[3.1rem] text-[0.75rem] font-bold text-twitterMuted flex items-center gap-4 hover:underline">
                         <RetweetIcon /> You retweeted.
                     </Link>
                 ) : (

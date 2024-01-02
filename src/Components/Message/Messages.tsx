@@ -23,7 +23,7 @@ export default function Messages({ selectedMessages, messagedUsername, handleCon
     }, [freshMessages]);
 
     return (
-        <main className="grid grid-col h-screen">
+        <main className="messages-cont">
             <div className="p-4 flex items-center gap-4 borderb-[1px] border-borderColor sticky z-50 top-0 bg-backgroundPrimary opacity-90 ">
                 <button className="icon-hoverable btn btn-white border-none" onClick={() => handleConversations(false)}>
                     <FaArrowLeft />

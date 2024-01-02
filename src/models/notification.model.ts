@@ -13,11 +13,7 @@ const notificationSchema = new mongoose.Schema({
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
-  userId: {
-    type: String,
-    index: true,
+    ref: "Users",
   },
 });
 

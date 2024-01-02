@@ -3,9 +3,11 @@ import User from '@/models/users.schema'
 import { verifyJwtToken } from "@/utilities/auth";
 import { UserTypes } from "@/types/userTypes";
 import {cookies} from 'next/headers'
+import { connectToDB } from "@/utilities/mongoose";
 
 
 export async function GET(request: NextRequest) {
+  await connectToDB()
   const cookieStore = cookies();
   const token = cookieStore.get("token")?.value;
   console.log(token)

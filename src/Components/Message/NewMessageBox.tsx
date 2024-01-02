@@ -77,7 +77,7 @@ export default function NewMessageBox({ messagedUsername, token, setFreshMessage
 
     return (
         <div className="p-3 relative">
-            <form className="new-message-form" onSubmit={formik.handleSubmit}>
+            <form className="inline" onSubmit={formik.handleSubmit}>
                 <div className="inline">
                     <TextField
                         placeholder="Start a new message"

@@ -19,12 +19,10 @@ export async function GET(request: NextRequest) {
     const user = await Users.findById(verifiedToken.id);
 
     if (!user) {
-      return NextResponse.json({ success: false, message: "User not found." });
+      return NextResponse.json({ success: false, message: "User not found." }); 
     }
 
-    const notifications = await Notification.find({
-      userId: user._id,
-    })
+    const notifications = await Notification.find({user: user._id})
       .populate({
         path: "user",
         select: "username name photoUrl",

@@ -17,8 +17,10 @@ body {
   overflow-wrap: anywhere;
 }
 
-.grid-col {
-  grid-template-columns: auto minmax(300px, 1fr) minmax(90px, auto);
+.messages-cont {
+  display: grid;
+  grid-template-rows: auto minmax(300px, 1fr) minmax(90px, auto);
+  height: 100vh;
 }
 
 .confirm {
